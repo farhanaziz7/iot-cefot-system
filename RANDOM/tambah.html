@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+
+	<script type="text/javascript" src="../js/jquery.js"></script>
+</head>
+<body>
+	<p>
+	Waktu Terakhir : <span id="time">Time</span><br>
+	Suhu Terakhir : <span id="suhu">Suhu</span><br>
+	Status Lampu : <span id="lampu">Lampu</span><br>
+	Status Kipas : <span id="kipas">Kipas</span><br>
+	Berat Terakhir : <span id="beratLast">Berat</span><br>
+	Stock Terakhir : <span id="stockLast">Stock</span>
+	<p>
+
+
+
+	<form action="tambahStock.php" method="POST">
+
+		<input type="text" name="stock" id="stock">
+		<button type="submit" value="Tambah">Tambah</button>
+		
+	</form>
+
+	<script type="text/javascript">
+		setInterval(ambilPakan,1000);
+		setInterval(sec_to_min,1000);
+
+		function sec_to_min(){
+			$.ajax({
+				url: 'update_sec_to_min.php',
+				success: function(response){
+					var test = $.parseJSON(response);
+
+			
+				},
+			})	
+		}
+
+		function ambilPakan(){
+			$.ajax({
+				url: 'tambahDataPakan.php',
+				success: function(response){
+					var test = $.parseJSON(response);
+
+					console.log(test);
+					var time = test['date'];
+					var suhu = test['suhu'];
+					var berat = test['berat'];
+					var stock = test['stock'];
+					var lampu = test['lampu'];
+					var kipas = test['kipas'];
+
+					$('#time').html(time);
+					$('#suhu').html(suhu);
+					$('#beratLast').html(berat);
+					$('#stockLast').html(stock);
+					$('#lampu').html(lampu);
+					$('#kipas').html(kipas);
+
+				},
+			})	
+		}
+	</script>
+
+
+</body>
+</html>
